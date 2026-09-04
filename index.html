@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -82,6 +83,7 @@
             0%, 100% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.15);
             }
@@ -98,6 +100,11 @@
 
             .tiempo {
                 min-width: 100px;
+                padding: 15px;
+            }
+
+            .numero {
+                font-size: 28px;
             }
         }
     </style>
@@ -156,48 +163,97 @@
     </div>
 
     <script>
+
+        // ❤️ Fecha y hora en que comenzó nuestra historia
         const fechaInicio = new Date("2019-09-07T00:00:00");
 
         function actualizarContador() {
 
             const ahora = new Date();
 
+            // Calcular años completos
             let años = ahora.getFullYear() - fechaInicio.getFullYear();
-            let meses = ahora.getMonth() - fechaInicio.getMonth();
-            let dias = ahora.getDate() - fechaInicio.getDate();
 
-            if (dias < 0) {
-                meses--;
-                const ultimoMes = new Date(
-                    ahora.getFullYear(),
-                    ahora.getMonth(),
-                    0
-                ).getDate();
-
-                dias += ultimoMes;
-            }
-
-            if (meses < 0) {
-                años--;
-                meses += 12;
-            }
-
-            const inicioPeriodo = new Date(
+            let fechaBase = new Date(
                 fechaInicio.getFullYear() + años,
-                fechaInicio.getMonth() + meses,
-                fechaInicio.getDate()
+                fechaInicio.getMonth(),
+                fechaInicio.getDate(),
+                fechaInicio.getHours(),
+                fechaInicio.getMinutes(),
+                fechaInicio.getSeconds()
             );
 
-            let diferencia = ahora - inicioPeriodo;
+            // Si todavía no se cumple el aniversario, restamos un año
+            if (fechaBase > ahora) {
+                años--;
 
-            const horas = Math.floor(diferencia / (1000 * 60 * 60));
+                fechaBase = new Date(
+                    fechaInicio.getFullYear() + años,
+                    fechaInicio.getMonth(),
+                    fechaInicio.getDate(),
+                    fechaInicio.getHours(),
+                    fechaInicio.getMinutes(),
+                    fechaInicio.getSeconds()
+                );
+            }
+
+            // Calcular meses completos
+            let meses =
+                (ahora.getFullYear() - fechaBase.getFullYear()) * 12 +
+                (ahora.getMonth() - fechaBase.getMonth());
+
+            let fechaMeses = new Date(
+                fechaBase.getFullYear(),
+                fechaBase.getMonth() + meses,
+                fechaBase.getDate(),
+                fechaBase.getHours(),
+                fechaBase.getMinutes(),
+                fechaBase.getSeconds()
+            );
+
+            if (fechaMeses > ahora) {
+                meses--;
+
+                fechaMeses = new Date(
+                    fechaBase.getFullYear(),
+                    fechaBase.getMonth() + meses,
+                    fechaBase.getDate(),
+                    fechaBase.getHours(),
+                    fechaBase.getMinutes(),
+                    fechaBase.getSeconds()
+                );
+            }
+
+            // Diferencia restante después de años y meses
+            let diferencia = ahora - fechaMeses;
+
+            // Días
+            const dias = Math.floor(
+                diferencia / (1000 * 60 * 60 * 24)
+            );
+
+            diferencia %= (1000 * 60 * 60 * 24);
+
+            // Horas
+            const horas = Math.floor(
+                diferencia / (1000 * 60 * 60)
+            );
+
             diferencia %= (1000 * 60 * 60);
 
-            const minutos = Math.floor(diferencia / (1000 * 60));
+            // Minutos
+            const minutos = Math.floor(
+                diferencia / (1000 * 60)
+            );
+
             diferencia %= (1000 * 60);
 
-            const segundos = Math.floor(diferencia / 1000);
+            // Segundos
+            const segundos = Math.floor(
+                diferencia / 1000
+            );
 
+            // Mostrar los resultados
             document.getElementById("años").textContent = años;
             document.getElementById("meses").textContent = meses;
             document.getElementById("dias").textContent = dias;
@@ -206,10 +262,14 @@
             document.getElementById("segundos").textContent = segundos;
         }
 
+        // Ejecutar inmediatamente
         actualizarContador();
 
+        // Actualizar cada segundo
         setInterval(actualizarContador, 1000);
+
     </script>
 
 </body>
 </html>
+```
