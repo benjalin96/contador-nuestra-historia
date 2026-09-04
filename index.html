@@ -164,17 +164,17 @@
 
     <script>
 
-        // ❤️ Fecha y hora en que comenzó nuestra historia
-        const fechaInicio = new Date("2019-09-07T00:00:00");
+        // FECHA DE INICIO
+        const fechaInicio = new Date(2019, 8, 7, 0, 0, 0);
 
         function actualizarContador() {
 
             const ahora = new Date();
 
-            // Calcular años completos
+            // AÑOS
             let años = ahora.getFullYear() - fechaInicio.getFullYear();
 
-            let fechaBase = new Date(
+            let aniversario = new Date(
                 fechaInicio.getFullYear() + años,
                 fechaInicio.getMonth(),
                 fechaInicio.getDate(),
@@ -183,11 +183,9 @@
                 fechaInicio.getSeconds()
             );
 
-            // Si todavía no se cumple el aniversario, restamos un año
-            if (fechaBase > ahora) {
+            if (aniversario > ahora) {
                 años--;
-
-                fechaBase = new Date(
+                aniversario = new Date(
                     fechaInicio.getFullYear() + años,
                     fechaInicio.getMonth(),
                     fechaInicio.getDate(),
@@ -197,63 +195,66 @@
                 );
             }
 
-            // Calcular meses completos
+            // MESES
             let meses =
-                (ahora.getFullYear() - fechaBase.getFullYear()) * 12 +
-                (ahora.getMonth() - fechaBase.getMonth());
+                ahora.getMonth() - aniversario.getMonth();
 
-            let fechaMeses = new Date(
-                fechaBase.getFullYear(),
-                fechaBase.getMonth() + meses,
-                fechaBase.getDate(),
-                fechaBase.getHours(),
-                fechaBase.getMinutes(),
-                fechaBase.getSeconds()
+            if (meses < 0) {
+                meses += 12;
+            }
+
+            let fechaMes = new Date(
+                aniversario.getFullYear(),
+                aniversario.getMonth() + meses,
+                aniversario.getDate(),
+                aniversario.getHours(),
+                aniversario.getMinutes(),
+                aniversario.getSeconds()
             );
 
-            if (fechaMeses > ahora) {
+            if (fechaMes > ahora) {
                 meses--;
 
-                fechaMeses = new Date(
-                    fechaBase.getFullYear(),
-                    fechaBase.getMonth() + meses,
-                    fechaBase.getDate(),
-                    fechaBase.getHours(),
-                    fechaBase.getMinutes(),
-                    fechaBase.getSeconds()
+                fechaMes = new Date(
+                    aniversario.getFullYear(),
+                    aniversario.getMonth() + meses,
+                    aniversario.getDate(),
+                    aniversario.getHours(),
+                    aniversario.getMinutes(),
+                    aniversario.getSeconds()
                 );
             }
 
-            // Diferencia restante después de años y meses
-            let diferencia = ahora - fechaMeses;
+            // TIEMPO RESTANTE
+            let diferencia = ahora - fechaMes;
 
-            // Días
+            // DÍAS
             const dias = Math.floor(
-                diferencia / (1000 * 60 * 60 * 24)
+                diferencia / 86400000
             );
 
-            diferencia %= (1000 * 60 * 60 * 24);
+            diferencia -= dias * 86400000;
 
-            // Horas
+            // HORAS
             const horas = Math.floor(
-                diferencia / (1000 * 60 * 60)
+                diferencia / 3600000
             );
 
-            diferencia %= (1000 * 60 * 60);
+            diferencia -= horas * 3600000;
 
-            // Minutos
+            // MINUTOS
             const minutos = Math.floor(
-                diferencia / (1000 * 60)
+                diferencia / 60000
             );
 
-            diferencia %= (1000 * 60);
+            diferencia -= minutos * 60000;
 
-            // Segundos
+            // SEGUNDOS
             const segundos = Math.floor(
                 diferencia / 1000
             );
 
-            // Mostrar los resultados
+            // MOSTRAR
             document.getElementById("años").textContent = años;
             document.getElementById("meses").textContent = meses;
             document.getElementById("dias").textContent = dias;
