@@ -1,109 +1,354 @@
-<script>
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Historia ❤️</title>
 
-    // ❤️ Inicio de nuestra historia:
-    // 7 de septiembre de 2019 a las 10:00 AM
-    const fechaInicio = new Date(2019, 8, 7, 10, 0, 0);
-
-    function actualizarContador() {
-
-        const ahora = new Date();
-
-        // AÑOS
-        let años = ahora.getFullYear() - fechaInicio.getFullYear();
-
-        let fechaAniversario = new Date(
-            fechaInicio.getFullYear() + años,
-            fechaInicio.getMonth(),
-            fechaInicio.getDate(),
-            fechaInicio.getHours(),
-            fechaInicio.getMinutes(),
-            fechaInicio.getSeconds()
-        );
-
-        // Si todavía no llega el aniversario, quitamos un año
-        if (fechaAniversario > ahora) {
-            años--;
-
-            fechaAniversario = new Date(
-                fechaInicio.getFullYear() + años,
-                fechaInicio.getMonth(),
-                fechaInicio.getDate(),
-                fechaInicio.getHours(),
-                fechaInicio.getMinutes(),
-                fechaInicio.getSeconds()
-            );
+    <style>
+        * {
+            box-sizing: border-box;
         }
 
-        // MESES
-        let meses =
-            (ahora.getFullYear() - fechaAniversario.getFullYear()) * 12 +
-            (ahora.getMonth() - fechaAniversario.getMonth());
-
-        let fechaMes = new Date(
-            fechaAniversario.getFullYear(),
-            fechaAniversario.getMonth() + meses,
-            fechaAniversario.getDate(),
-            fechaAniversario.getHours(),
-            fechaAniversario.getMinutes(),
-            fechaAniversario.getSeconds()
-        );
-
-        // Si todavía no se cumple el mes actual
-        if (fechaMes > ahora) {
-            meses--;
-
-            fechaMes = new Date(
-                fechaAniversario.getFullYear(),
-                fechaAniversario.getMonth() + meses,
-                fechaAniversario.getDate(),
-                fechaAniversario.getHours(),
-                fechaAniversario.getMinutes(),
-                fechaAniversario.getSeconds()
-            );
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            color: #5a2630;
+            text-align: center;
         }
 
-        // DIFERENCIA RESTANTE
-        let diferencia = ahora - fechaMes;
+        .contenedor {
+            width: 90%;
+            max-width: 850px;
+            padding: 50px 25px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
 
-        // DÍAS
-        const dias = Math.floor(
-            diferencia / (1000 * 60 * 60 * 24)
+        .corazon {
+            font-size: 60px;
+            animation: latido 1.3s infinite;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin: 10px 0;
+        }
+
+        .frase {
+            font-size: 20px;
+            margin-bottom: 35px;
+        }
+
+        .contador {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .tiempo {
+            background: white;
+            padding: 20px;
+            min-width: 120px;
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .numero {
+            display: block;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .texto {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .desde {
+            margin-top: 35px;
+            font-size: 15px;
+            opacity: 0.8;
+        }
+
+        @keyframes latido {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .frase {
+                font-size: 17px;
+            }
+
+            .tiempo {
+                min-width: 100px;
+                padding: 15px;
+            }
+
+            .numero {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="corazon">❤️</div>
+
+        <h1>Nuestra Historia</h1>
+
+        <p class="frase">
+            ¿Cuánto tiempo llevamos escribiendo nuestra historia?
+        </p>
+
+        <div class="contador">
+
+            <div class="tiempo">
+                <span class="numero" id="años">0</span>
+                <span class="texto">Años</span>
+            </div>
+
+            <div class="tiempo">
+                <span class="numero" id="meses">0</span>
+                <span class="texto">Meses</span>
+            </div>
+
+            <div class="tiempo">
+                <span class="numero" id="dias">0</span>
+                <span class="texto">Días</span>
+            </div>
+
+            <div class="tiempo">
+                <span class="numero" id="horas">0</span>
+                <span class="texto">Horas</span>
+            </div>
+
+            <div class="tiempo">
+                <span class="numero" id="minutos">0</span>
+                <span class="texto">Minutos</span>
+            </div>
+
+            <div class="tiempo">
+                <span class="numero" id="segundos">0</span>
+                <span class="texto">Segundos</span>
+            </div>
+
+        </div>
+
+        <p class="desde">
+            Nuestra historia comenzó el 7 de septiembre de 2019 a las 10:00 AM ❤️
+        </p>
+
+    </div>
+
+
+    <script>
+
+        /*
+         * ❤️ NUESTRA HISTORIA
+         *
+         * Fecha de inicio:
+         * 7 de septiembre de 2019
+         * 10:00 AM
+         *
+         * El contador se actualiza cada segundo.
+         */
+
+        const fechaInicio = new Date(2019, 8, 7, 10, 0, 0);
+
+
+        function actualizarContador() {
+
+            const ahora = new Date();
+
+
+            /*
+             * ==========================
+             * AÑOS
+             * ==========================
+             */
+
+            let años = ahora.getFullYear() - fechaInicio.getFullYear();
+
+            let fechaActual = new Date(fechaInicio);
+
+            fechaActual.setFullYear(
+                fechaInicio.getFullYear() + años
+            );
+
+
+            // Si todavía no llega al aniversario
+            if (fechaActual > ahora) {
+
+                años--;
+
+                fechaActual = new Date(fechaInicio);
+
+                fechaActual.setFullYear(
+                    fechaInicio.getFullYear() + años
+                );
+            }
+
+
+            /*
+             * ==========================
+             * MESES
+             * ==========================
+             */
+
+            let meses = 0;
+
+            while (true) {
+
+                let siguienteMes = new Date(fechaActual);
+
+                siguienteMes.setMonth(
+                    siguienteMes.getMonth() + 1
+                );
+
+
+                if (siguienteMes <= ahora) {
+
+                    fechaActual = siguienteMes;
+
+                    meses++;
+
+                } else {
+
+                    break;
+
+                }
+            }
+
+
+            /*
+             * ==========================
+             * DIFERENCIA RESTANTE
+             * ==========================
+             */
+
+            let diferencia = ahora - fechaActual;
+
+
+            /*
+             * ==========================
+             * DÍAS
+             * ==========================
+             */
+
+            const dias = Math.floor(
+                diferencia / (1000 * 60 * 60 * 24)
+            );
+
+            diferencia =
+                diferencia % (1000 * 60 * 60 * 24);
+
+
+            /*
+             * ==========================
+             * HORAS
+             * ==========================
+             */
+
+            const horas = Math.floor(
+                diferencia / (1000 * 60 * 60)
+            );
+
+            diferencia =
+                diferencia % (1000 * 60 * 60);
+
+
+            /*
+             * ==========================
+             * MINUTOS
+             * ==========================
+             */
+
+            const minutos = Math.floor(
+                diferencia / (1000 * 60)
+            );
+
+            diferencia =
+                diferencia % (1000 * 60);
+
+
+            /*
+             * ==========================
+             * SEGUNDOS
+             * ==========================
+             */
+
+            const segundos = Math.floor(
+                diferencia / 1000
+            );
+
+
+            /*
+             * ==========================
+             * MOSTRAR CONTADOR
+             * ==========================
+             */
+
+            document.getElementById("años").textContent =
+                años;
+
+            document.getElementById("meses").textContent =
+                meses;
+
+            document.getElementById("dias").textContent =
+                dias;
+
+            document.getElementById("horas").textContent =
+                horas;
+
+            document.getElementById("minutos").textContent =
+                minutos;
+
+            document.getElementById("segundos").textContent =
+                segundos;
+        }
+
+
+        /*
+         * Ejecutar inmediatamente
+         */
+
+        actualizarContador();
+
+
+        /*
+         * Actualizar cada segundo
+         */
+
+        setInterval(
+            actualizarContador,
+            1000
         );
 
-        diferencia %= (1000 * 60 * 60 * 24);
+    </script>
 
-        // HORAS
-        const horas = Math.floor(
-            diferencia / (1000 * 60 * 60)
-        );
-
-        diferencia %= (1000 * 60 * 60);
-
-        // MINUTOS
-        const minutos = Math.floor(
-            diferencia / (1000 * 60)
-        );
-
-        diferencia %= (1000 * 60);
-
-        // SEGUNDOS
-        const segundos = Math.floor(
-            diferencia / 1000
-        );
-
-        // MOSTRAR
-        document.getElementById("años").textContent = años;
-        document.getElementById("meses").textContent = meses;
-        document.getElementById("dias").textContent = dias;
-        document.getElementById("horas").textContent = horas;
-        document.getElementById("minutos").textContent = minutos;
-        document.getElementById("segundos").textContent = segundos;
-    }
-
-    // Iniciar contador
-    actualizarContador();
-
-    // Actualizar cada segundo
-    setInterval(actualizarContador, 1000);
-
-</script>
+</body>
+</html>
+```
