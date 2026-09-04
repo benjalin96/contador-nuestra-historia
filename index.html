@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Historia ❤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            color: #5a2630;
+            text-align: center;
+        }
+
+        .contenedor {
+            width: 90%;
+            max-width: 850px;
+            padding: 50px 25px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .corazon {
+            font-size: 60px;
+            animation: latido 1.3s infinite;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin: 10px 0;
+        }
+
+        .frase {
+            font-size: 20px;
+            margin-bottom: 35px;
+        }
+
+        .contador {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .tiempo {
+            background: white;
+            padding: 20px;
+            min-width: 120px;
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .numero {
+            display: block;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .texto {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .desde {
+            margin-top: 35px;
+            font-size: 15px;
+            opacity: 0.8;
+        }
+
+        @keyframes latido {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .frase {
+                font-size: 17px;
+            }
+
+            .tiempo {
+                min-width: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="corazon">❤️</div>
+
+        <h1>Nuestra Historia</h1>
+
+        <p class="frase">
+            ¿Cuánto tiempo llevamos escribiendo nuestra historia?
+        </p>
+
+        <div class="contador">
+
+            <div class="tiempo">
+                <span class="numero" id="años">0</span>
+                <span class="texto">Años</span>
+            </div>
+
+            <div class="tiempo">
+                <span class="numero" id="meses">0</span>
+                <span class="texto">Meses</span>
+            </div>
+
+            <div class="tiempo">
+                <span class="numero" id="dias">0</span>
+                <span class="texto">Días</span>
+            </div>
+
+            <div class="tiempo">
+                <span class="numero" id="horas">0</span>
+                <span class="texto">Horas</span>
+            </div>
+
+            <div class="tiempo">
+                <span class="numero" id="minutos">0</span>
+                <span class="texto">Minutos</span>
+            </div>
+
+            <div class="tiempo">
+                <span class="numero" id="segundos">0</span>
+                <span class="texto">Segundos</span>
+            </div>
+
+        </div>
+
+        <p class="desde">
+            Nuestra historia comenzó el 7 de septiembre de 2019 ❤️
+        </p>
+
+    </div>
+
+    <script>
+        const fechaInicio = new Date("2019-09-07T00:00:00");
+
+        function actualizarContador() {
+
+            const ahora = new Date();
+
+            let años = ahora.getFullYear() - fechaInicio.getFullYear();
+            let meses = ahora.getMonth() - fechaInicio.getMonth();
+            let dias = ahora.getDate() - fechaInicio.getDate();
+
+            if (dias < 0) {
+                meses--;
+                const ultimoMes = new Date(
+                    ahora.getFullYear(),
+                    ahora.getMonth(),
+                    0
+                ).getDate();
+
+                dias += ultimoMes;
+            }
+
+            if (meses < 0) {
+                años--;
+                meses += 12;
+            }
+
+            const inicioPeriodo = new Date(
+                fechaInicio.getFullYear() + años,
+                fechaInicio.getMonth() + meses,
+                fechaInicio.getDate()
+            );
+
+            let diferencia = ahora - inicioPeriodo;
+
+            const horas = Math.floor(diferencia / (1000 * 60 * 60));
+            diferencia %= (1000 * 60 * 60);
+
+            const minutos = Math.floor(diferencia / (1000 * 60));
+            diferencia %= (1000 * 60);
+
+            const segundos = Math.floor(diferencia / 1000);
+
+            document.getElementById("años").textContent = años;
+            document.getElementById("meses").textContent = meses;
+            document.getElementById("dias").textContent = dias;
+            document.getElementById("horas").textContent = horas;
+            document.getElementById("minutos").textContent = minutos;
+            document.getElementById("segundos").textContent = segundos;
+        }
+
+        actualizarContador();
+
+        setInterval(actualizarContador, 1000);
+    </script>
+
+</body>
+</html>
